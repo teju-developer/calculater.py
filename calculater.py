@@ -1,72 +1,37 @@
-from tkinter import Tk, Entry, Button, StringVar
+"""
+calculater.py - Upgraded Entry Point
+Backward-compatible wrapper for QuantumCalc Advanced Scientific Calculator.
+Upgraded from the original basic calculator to modern modular architecture.
+"""
+
+import sys
+import os
+import tkinter as tk
+
+# Ensure current directory is on path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from main import enable_high_dpi_awareness
+from calculator.ui import CalculatorUI
 
 
-class Calculator:
-    def __init__(self, master):
-        master.title("Calculator")
-        master.geometry("357x420+0+0")
-        master.config(bg="pink")
-        master.resizable(False, False)
+class Calculator(CalculatorUI):
+    """
+    Backward-compatible Calculator class extending the modernized CalculatorUI.
+    Allows existing code referencing Calculator(root) to function seamlessly.
+    """
+    def __init__(self, master=None):
+        if master is None:
+            master = tk.Tk()
+        super().__init__(master)
 
-        self.equation = StringVar()
-        self.entry_value = ""
 
-        Entry(
-            width=17,
-            bg="pink",
-            font=("Arial Bold", 28),
-            textvariable=self.equation,
-        ).place(x=0, y=0)
-
-        # Row 1: y=50
-        Button(width=11, height=4, text="(", relief="flat", bg="white", command=lambda: self.show("(")).place(x=0, y=50)
-        Button(width=11, height=4, text=")", relief="flat", bg="white", command=lambda: self.show(")")).place(x=90, y=50)
-        Button(width=11, height=4, text="%", relief="flat", bg="white", command=lambda: self.show("%")).place(x=180, y=50)
-        Button(width=11, height=4, text="/", relief="flat", bg="white", command=lambda: self.show("/")).place(x=270, y=50)
-
-        # Row 2: y=125
-        Button(width=11, height=4, text="1", relief="flat", bg="white", command=lambda: self.show(1)).place(x=0, y=125)
-        Button(width=11, height=4, text="2", relief="flat", bg="white", command=lambda: self.show(2)).place(x=90, y=125)
-        Button(width=11, height=4, text="3", relief="flat", bg="white", command=lambda: self.show(3)).place(x=180, y=125)
-        Button(width=11, height=4, text="x", relief="flat", bg="white", command=lambda: self.show("*")).place(x=270, y=125)
-
-        # Row 3: y=200
-        Button(width=11, height=4, text="4", relief="flat", bg="white", command=lambda: self.show(4)).place(x=0, y=200)
-        Button(width=11, height=4, text="5", relief="flat", bg="white", command=lambda: self.show(5)).place(x=90, y=200)
-        Button(width=11, height=4, text="6", relief="flat", bg="white", command=lambda: self.show(6)).place(x=180, y=200)
-        Button(width=11, height=4, text="-", relief="flat", bg="white", command=lambda: self.show("-")).place(x=270, y=200)
-
-        # Row 4: y=275
-        Button(width=11, height=4, text="7", relief="flat", bg="white", command=lambda: self.show(7)).place(x=0, y=275)
-        Button(width=11, height=4, text="9", relief="flat", bg="white", command=lambda: self.show(9)).place(x=90, y=275)
-        Button(width=11, height=4, text="8", relief="flat", bg="white", command=lambda: self.show(8)).place(x=180, y=275)
-        Button(width=11, height=4, text="+", relief="flat", bg="white", command=lambda: self.show("+")).place(x=270, y=275)
-
-        # Row 5: y=350
-        Button(width=11, height=4, text="C", relief="flat", bg="white", command=self.clear).place(x=0, y=350)
-        Button(width=11, height=4, text="0", relief="flat", bg="white", command=lambda: self.show(0)).place(x=90, y=350)
-        Button(width=11, height=4, text=".", relief="flat", bg="white", command=lambda: self.show(".")).place(x=180, y=350)
-        Button(width=11, height=4, text="=", relief="flat", bg="lightblue", command=self.solve).place(x=270, y=350)
-
-    def show(self, value):
-        self.entry_value += str(value)
-        self.equation.set(self.entry_value)
-
-    def clear(self):
-        self.entry_value = ""
-        self.equation.set(self.entry_value)
-
-    def solve(self):
-        try:
-            result = eval(self.entry_value)
-            self.entry_value = str(result)
-            self.equation.set(self.entry_value)
-        except Exception:
-            self.entry_value = ""
-            self.equation.set("Error")
+def main():
+    enable_high_dpi_awareness()
+    root = tk.Tk()
+    app = Calculator(root)
+    root.mainloop()
 
 
 if __name__ == "__main__":
-    root = Tk()
-    calculator = Calculator(root)
-    root.mainloop()
+    main()
