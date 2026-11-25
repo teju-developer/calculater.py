@@ -1,9 +1,0 @@
-# QuantumCalc • Advanced Scientific Calculator
-# Requirements File
-
-# The application is built using Python's built-in standard library
-# (tkinter, ast, math, json, os, sys, ctypes, unittest).
-# No external dependencies are mandatory to run the calculator.
-
-# Optional dependencies:
-Pillow>=10.0.0      # Optional: used for icon generation and UI screenshots
